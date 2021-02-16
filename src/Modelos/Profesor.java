@@ -1,37 +1,25 @@
 package Modelos;
 
 public class Profesor {
-    private int ID;
-    private String Nombre1;
-    private String Nombre2;
-    private String Apellido1;
-    private String Apellido2;
+    private int id;
+    private String nombre1;
+    private String nombre2;
+    private String apellido1;
+    private String apellido2;
 
     public Profesor(int ID, String nombre1, String nombre2, String apellido1, String apellido2) {
-        this.ID = ID;
-        Nombre1 = nombre1;
-        Nombre2 = nombre2;
-        Apellido1 = apellido1;
-        Apellido2 = apellido2;
+        this.id = ID;
+        this.nombre1 = nombre1;
+        this.nombre2 = nombre2;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public String getNombre1() {
-        return Nombre1;
-    }
-
-    public String getNombre2() {
-        return Nombre2;
-    }
-
-    public String getApellido1() {
-        return Apellido1;
-    }
-
-    public String getApellido2() {
-        return Apellido2;
+    public String getNombre() {
+        return nombre1 + " " + nombre2 + " " + apellido1 + " " + apellido2;
     }
 }

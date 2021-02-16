@@ -1,7 +1,7 @@
 package Modelos;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 
 public class Alumno {
     private int id;
@@ -10,6 +10,7 @@ public class Alumno {
     private String apellido1;
     private String apellido2;
     private ArrayList<Notas> notas;
+    private ArrayList<Curso> cursos;
 
     public Alumno(int ID, String nombre1, String nombre2, String apellido1, String apellido2) {
         id = ID;
@@ -18,61 +19,69 @@ public class Alumno {
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         notas = new ArrayList<>();
+        cursos = new ArrayList<>();
     }
 
     public int getID() {
         return id;
     }
 
-    public String getNombre1() {
-        return nombre1;
+    public String getNombre() {
+        return nombre1 + " " + nombre2 + " " + apellido1 + " " + apellido2;
     }
 
-    public String getNombre2() {
-        return nombre2;
+    public void registrarCurso(Curso curso) {
+        if (cursos.contains(curso)) {
+            System.out.println("Alumno ya estaba registrado en el curso");
+            return;
+        }
+        curso.saveAlumno(this);
+        cursos.add(curso);
     }
 
-    public String getApellido1() {
-        return apellido1;
-    }
+    public void addNotas(Curso curso, double... notas) {
+        for (Notas n : this.notas) {
+            if (n.getCursoID() == curso.getID()) {
+                n.addNotas(notas);
+                return;
+            }
+        }
 
-    public String getApellido2() {
-        return apellido2;
-    }
-
-    public void addNotas(Notas n1) {
+        Notas n1 = new Notas(curso.getID(), notas);
         this.notas.add(n1);
     }
 
-    public double getPromedio(int cursoID) {
+    public double getPromedioPorCurso(Curso curso) {
         Notas notasPorCurso = null;
         for (int i = 0; i <= notas.toArray().length - 1; i++) {
-            if (notas.get(i).getCursoID() == cursoID) {
+            if (notas.get(i).getCursoID() == curso.getID()) {
                 notasPorCurso = notas.get(i);
                 break;
             }
         }
 
-        if (notasPorCurso == null) return  0;
+        if (notasPorCurso == null) return 0;
 
-        int[] arrNumbers = notasPorCurso.getNotas();
+        double[] arrNumbers = notasPorCurso.getNotas();
+        return getPromedio(arrNumbers);
+    }
+
+    private double getPromedio(double[] arrNumbers) {
         double sum = 0;
 
-        for(int a = 0; a < arrNumbers.length; a++)
-        {
+        for (int a = 0; a <= arrNumbers.length - 1; a++) {
             sum = sum + arrNumbers[a];
         }
 
-        double average = sum / arrNumbers.length;
-        return average;
+        return sum / arrNumbers.length;
     }
 
     public double getPromedioTotal() {
-        double sum = 0;
-        for (int i = 0; i <= notas.toArray().length - 1; i++) {
-            sum = sum + getPromedio(notas.get(i).getCursoID());
+        double[] promediosArr = new double[notas.size()];
+        for (int i = 0; i <= notas.size() - 1; i++) {
+            double[] notasPorCurso = notas.get(i).getNotas();
+            promediosArr[i] = getPromedio(notasPorCurso);
         }
-
-        return sum / notas.toArray().length;
+        return getPromedio(promediosArr);
     }
 }
