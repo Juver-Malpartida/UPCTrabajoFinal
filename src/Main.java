@@ -21,6 +21,7 @@ public class Main {
 
 
         Notas n1 = new Notas(3040, new int[] {14, 12, 15, 20, 17});
+        //TODO: Try to update notas.
         a1.addNotas(n1);
 
         Notas n2 = new Notas(3030, new int[] {11, 12, 13, 15, 20});
@@ -33,6 +34,8 @@ public class Main {
         System.out.println("El promedio en computacion es: " + a1.getPromedio(cursoId));
 
         System.out.println("El promedio total es: " + a1.getPromedioTotal());
+
+        //TODO: Generate notas by course.
     }
 
     private static int getCursoID(String nombre, Curso[] cursos) {
